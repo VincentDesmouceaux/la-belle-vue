@@ -1,37 +1,51 @@
 <template>
-    <div class="menu-item">
-      <img class="menu-item__image" :src="image.source" :alt="image.alt" />
+  <div class="menu-item">
+    <img class="menu-item__image" :src="image.source" :alt="image.alt" />
+    <div>
+      <h3>{{ name }}</h3>
+      <p>Price: {{ generatedPrice }}</p>
+      <p v-if="inStock">In Stock</p>
+      <p v-else>Out of Stock</p>
       <div>
-        <h3>{{ name }}</h3>
-        <p v-if="inStock">In Stock</p>
-        <p v-else>Out of Stock</p>
-        <div>
-          <label for="add-item-quantity">Quantity: {{ quantity }}</label>
-          <input v-model.number="localQuantity" id="add-item-quantity" type="number" />
-          <button @click="addToShoppingCart(localQuantity)">
-            Add to Shopping Cart
-          </button>
-        </div>
+        <label for="add-item-quantity">Quantity: {{ quantity }}</label>
+        <input v-model.number="localQuantity" id="add-item-quantity" type="number" />
+        <button @click="addToShoppingCart(localQuantity)">
+          Add to Shopping Cart
+        </button>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'MenuItem',
-    props: ['addToShoppingCart', 'image', 'inStock', 'name', 'quantity'],
-    data() {
-      return {
-        localQuantity: this.quantity
-      };
-    },
-    watch: {
-      quantity(newVal) {
-        this.localQuantity = newVal;
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'MenuItem',
+  props: ['addToShoppingCart', 'image', 'inStock', 'name', 'price', 'quantity'],
+  data() {
+    return {
+      onSale: false,
+      localQuantity: this.quantity
+    };
+  },
+  computed: {
+    generatedPrice() {
+      if (this.onSale) {
+        return (this.price * 0.9).toFixed(2);
+      } else {
+        return this.price.toFixed(2);
       }
     }
+  },
+  beforeMount() {
+    const today = new Date().getDate();
+
+    if (today % 2 === 0) {
+      this.onSale = true;
+    }
   }
-  </script>
-  
-  <style></style>
-  
+};
+</script>
+
+<style >
+
+</style>
