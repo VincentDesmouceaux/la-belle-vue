@@ -3,11 +3,11 @@
     <img class="menu-item__image" :src="image.source" :alt="image.alt" />
     <div>
       <h3>{{ name }}</h3>
-      <p>Price: {{ generatedPrice }}</p>
+      <p>Price: {{ generatedPrice }} <span v-if="onSale">(10% off!)</span></p>
       <p v-if="inStock">In Stock</p>
       <p v-else>Out of Stock</p>
       <div>
-        <label for="add-item-quantity">Quantity: {{ quantity }}</label>
+        <label for="add-item-quantity">Quantity: {{ localQuantity }}</label>
         <input v-model.number="localQuantity" id="add-item-quantity" type="number" />
         <button @click="addToShoppingCart(localQuantity)">
           Add to Shopping Cart
@@ -46,6 +46,6 @@ export default {
 };
 </script>
 
-<style >
-
+<style scoped>
+/* Styles spécifiques au composant ici */
 </style>
