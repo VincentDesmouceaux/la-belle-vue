@@ -21,6 +21,7 @@
 
 <script>
 import BaseButton from './BaseButton.vue'
+import { mapActions } from 'vuex'
 
 
 export default {
@@ -67,9 +68,8 @@ export default {
     }
   },
   methods: {
-    updateShoppingCart(quantity) {
-      this.$emit('add-items-to-cart', quantity)
-    }
+     ...mapActions(['updateShoppingCart'])
+    
   },
 
   beforeMount() {
