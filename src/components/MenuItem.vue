@@ -1,3 +1,4 @@
+
 <template>
   <div class="menu-item">
     <img class="menu-item__image" :src="image.source" :alt="image.alt" />
@@ -9,17 +10,24 @@
       <div>
         <label for="add-item-quantity">Quantity: {{ localQuantity }}</label>
         <input v-model.number="localQuantity" id="add-item-quantity" type="number" />
-        <button @click="updateShoppingCart(localQuantity)">
-          Add to Shopping Cart
-        </button>
+        <BaseButton v-on="$attrs" @click="updateShoppingCart(quantity)">
+             Add to shopping cart
+         </BaseButton>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BaseButton from './BaseButton.vue'
+
+
 export default {
   name: 'MenuItem',
+  components: {
+    BaseButton
+  },
   props: {
     
     image: {
