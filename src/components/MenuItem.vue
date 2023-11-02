@@ -9,7 +9,7 @@
       <div>
         <label for="add-item-quantity">Quantity: {{ localQuantity }}</label>
         <input v-model.number="localQuantity" id="add-item-quantity" type="number" />
-        <button @click="addToShoppingCart(localQuantity)">
+        <button @click="updateShoppingCart(localQuantity)">
           Add to Shopping Cart
         </button>
       </div>
@@ -20,7 +20,29 @@
 <script>
 export default {
   name: 'MenuItem',
-  props: ['addToShoppingCart', 'image', 'inStock', 'name', 'price', 'quantity'],
+  props: {
+    
+    image: {
+      type: Object,
+      required: true
+    },
+    inStock: {
+      type: Boolean,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    quantity: {
+      type: Number,
+      defaut: 1
+    }
+  },
   data() {
     return {
       onSale: false,
@@ -36,6 +58,12 @@ export default {
       }
     }
   },
+  methods: {
+    updateShoppingCart(quantity) {
+      this.$emit('add-items-to-cart', quantity)
+    }
+  },
+
   beforeMount() {
     const today = new Date().getDate();
 
